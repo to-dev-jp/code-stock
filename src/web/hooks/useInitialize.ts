@@ -8,17 +8,6 @@ declare const window: ElectronWindow;
 export const useInit = () => {
   const [isMax, setIsMax] = useState(false); //ウィンドウが最大化されているか
 
-  const init = async () => {
-    const result = await window.dbOp.createDb();
-
-    if (result.success) {
-      console.log("DB is created successfully");
-    } else {
-      console.log(result.error);
-      return;
-    }
-  };
-
   // 起動時にウィンドウが最大化されているか
   const getIsMaximized = async () => {
     const isMaximized = await window.dbOp.isMaximized();
@@ -46,7 +35,6 @@ export const useInit = () => {
   };
 
   return {
-    init,
     getIsMaximized,
     isMax,
     handleMaximize,

@@ -33,7 +33,6 @@ export const App = () => {
     setCodeCount,
     getLang,
     getTag,
-    init,
     getIsMaximized,
   } = useAppContext();
 
@@ -41,7 +40,6 @@ export const App = () => {
   const [listStyle, setListStyle] = useState("grid"); //コード一覧の表示形式
 
   useEffect(() => {
-    init();
     getLang();
     getTag();
     searchCodes("");

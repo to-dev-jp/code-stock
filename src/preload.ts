@@ -1,5 +1,5 @@
 const { contextBridge, ipcRenderer } = require("electron");
-import { Code } from "./web/types/types";
+import { Code, CodeInput } from "./web/types/types";
 
 contextBridge.exposeInMainWorld("dbOp", {
   createDb: async () => ipcRenderer.invoke("createDb"), //データベース作成

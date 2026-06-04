@@ -123,7 +123,7 @@ export const useHandleData = ({
       ...codeData,
       created_at: currentDate.toString(),
       tags: newTags,
-    };
+    } as Code;
 
     const result = await window.dbOp.upsertCode(submitData);
     if (result.success) {
@@ -152,7 +152,7 @@ export const useHandleData = ({
     const submitData = {
       ...editData,
       tags: editTags,
-    };
+    } as Code;
 
     const result = await window.dbOp.upsertCode(submitData);
     if (result.success) {

@@ -36,6 +36,16 @@ export type Code = {
   tags: string[];
 };
 
+export type CodeRows = {
+  id: string;
+  title: string;
+  lang: string;
+  code: string;
+  note: string | null;
+  created_at: string;
+  tags: string;
+};
+
 export type DisplayData = {
   id: string;
   title: string;
@@ -49,7 +59,7 @@ export type DisplayData = {
 
 export type Modal = {
   is: string;
-  isOpen: string;
+  isOpen: boolean;
 };
 
 export type Filter = {
@@ -68,7 +78,7 @@ export interface ElectronWindow extends Window {
     getCodesByTag: (tag: string) => Promise<DbResponse>;
     searchCodes: (query: string) => Promise<DbResponse>;
     getLangs: () => Promise<LangResponse>;
-    upsertCode: (data: CodeInput) => Promise<DbResponse>;
+    upsertCode: (data: Code) => Promise<DbResponse>;
     getTags: () => Promise<TagResponse>;
     deleteCode: (id: string) => Promise<DbResponse>;
     closeWindow: () => void;
