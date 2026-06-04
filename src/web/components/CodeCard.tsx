@@ -3,8 +3,10 @@ import edit from "../../assets/edit-green.png";
 import trash from "../../assets/delete-green.png";
 
 import { Code } from "../types/types";
+import hljs from "highlight.js/lib/core";
 import { LANG_COLORS } from "../const/const";
 import { useAppContext } from "../context/AppContext";
+import { useEffect, useRef } from "react";
 
 export default function CodeCard({ code }: { code: Code }) {
   const {
@@ -14,6 +16,15 @@ export default function CodeCard({ code }: { code: Code }) {
     setCurrentModal,
     setDisplayData,
   } = useAppContext();
+
+  const codeRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = codeRef.current;
+    if (el && !el.dataset.highlighted) {
+      hljs.highlightElement(el);
+    }
+  }, [code.code, code.lang]);
 
   return (
     <div
@@ -53,6 +64,7 @@ export default function CodeCard({ code }: { code: Code }) {
           <div className="codeMain">
             <pre>
               <code
+                ref={codeRef}
                 className={`language-${code.lang}`}
                 style={{ width: "500px" }}
               >

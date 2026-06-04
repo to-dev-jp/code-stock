@@ -1,3 +1,4 @@
+import "../../styles/modal.css";
 import { useAppContext } from "../../context/AppContext";
 import { DisplayData, Modal } from "../../types/types";
 
@@ -21,9 +22,7 @@ export default function SaveModal() {
     <>
       <div
         className={
-          currentModal.isOpen || displayData.isOpen
-            ? "createModalBg open"
-            : "createModalBg"
+          currentModal.isOpen || displayData.isOpen ? "ModalBg open" : "ModalBg"
         }
         onClick={() => {
           setCurrentModal((prev: Modal) => ({
@@ -39,8 +38,8 @@ export default function SaveModal() {
       <div
         className={
           currentModal.isOpen && currentModal.is === "create"
-            ? "createModal open"
-            : "createModal"
+            ? "saveModal open"
+            : "saveModal"
         }
         style={{
           display: "flex",

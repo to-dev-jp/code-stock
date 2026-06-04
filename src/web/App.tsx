@@ -49,9 +49,6 @@ export const App = () => {
   useEffect(() => {
     // コードのシンタックスハイライト処理
     if (!codes) return;
-    document.querySelectorAll("pre code").forEach((el) => {
-      hljs.highlightElement(el as HTMLElement);
-    });
     // 起動時のフィルターの処理
     if (!isInitial) return;
     setCodeCount(codes.length);

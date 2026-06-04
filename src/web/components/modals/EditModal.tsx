@@ -1,5 +1,6 @@
-import { useAppContext } from "../../context/AppContext";
+import "../../styles/modal.css";
 import { Modal } from "../../types/types";
+import { useAppContext } from "../../context/AppContext";
 
 export default function EditModal() {
   const {
@@ -19,16 +20,11 @@ export default function EditModal() {
     <div
       className={
         currentModal.isOpen && currentModal.is === "edit"
-          ? "createModal open"
-          : "createModal"
+          ? "editModal open"
+          : "editModal"
       }
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
     >
-      <div className="modalWrap" style={{ width: "90%", height: "91.5%" }}>
+      <div className="modalWrap">
         <h3>コードを編集</h3>
         <form
           onSubmit={(e) => {
@@ -36,12 +32,7 @@ export default function EditModal() {
             handleEdit();
             setCurrentModal({ isOpen: false, is: "edit" });
           }}
-          style={{
-            display: "grid",
-            gridGap: "10px",
-            marginTop: "15px",
-            gridTemplateColumns: "1fr 1fr",
-          }}
+          className="editForm"
         >
           <div>
             <label>
@@ -69,7 +60,7 @@ export default function EditModal() {
               />
             </label>
           </div>
-          <div style={{ gridColumn: "1/3" }}>
+          <div className="wideColumn">
             <label>
               <p className="formLabel">タグ(Enterで追加)</p>
               <input
@@ -88,7 +79,7 @@ export default function EditModal() {
               ))}
             </label>
           </div>
-          <div style={{ gridColumn: "1/3" }}>
+          <div className="wideColumn">
             <label>
               <p className="formLabel">コード本文</p>
               <textarea
@@ -101,7 +92,7 @@ export default function EditModal() {
               />
             </label>
           </div>
-          <div style={{ gridColumn: "1/3" }}>
+          <div className="wideColumn">
             <label>
               <p className="formLabel">メモ</p>
               <input
@@ -114,15 +105,7 @@ export default function EditModal() {
               />
             </label>
           </div>
-          <div
-            style={{
-              gap: "10px",
-              gridColumn: "1/3",
-              display: "flex",
-              marginTop: "10px",
-              justifyContent: "right",
-            }}
-          >
+          <div className="editButtonsWrap">
             <button
               type="button"
               onClick={() => {
@@ -132,19 +115,10 @@ export default function EditModal() {
                 }));
               }}
               className="cancelButton"
-              style={{
-                cursor: "pointer",
-              }}
             >
               キャンセル
             </button>
-            <button
-              type="submit"
-              className="saveButton"
-              style={{
-                cursor: "pointer",
-              }}
-            >
+            <button type="submit" className="saveButton">
               保存する
             </button>
           </div>

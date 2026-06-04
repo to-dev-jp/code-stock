@@ -1,3 +1,4 @@
+import "../../styles/modal.css";
 import { useAppContext } from "../../context/AppContext";
 
 export default function MenuModal() {
@@ -7,32 +8,22 @@ export default function MenuModal() {
       <div
         className={
           currentModal.isOpen && currentModal.is === "log"
-            ? "createModal open"
-            : "createModal"
+            ? "menuModal open"
+            : "menuModal"
         }
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
       >
-        <div className="modalWrap" style={{ width: "90%", height: "90%" }}>
+        <div className="modalWrap">
           <p>LOG MODAL</p>
         </div>
       </div>
       <div
         className={
           currentModal.isOpen && currentModal.is === "menu"
-            ? "createModal open"
-            : "createModal"
+            ? "menuModal open"
+            : "menuModal"
         }
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
       >
-        <div className="modalWrap" style={{ width: "90%", height: "90%" }}>
+        <div className="modalWrap">
           <p>MENU MODAL</p>
         </div>
       </div>

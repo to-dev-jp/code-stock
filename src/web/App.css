@@ -146,7 +146,7 @@ body {
   background: var(--main-bg-color);
 }
 
-.createModalBg {
+.ModalBg {
   inset: 0;
   opacity: 0;
   width: 100%;
@@ -159,29 +159,7 @@ body {
   background: var(--modal-hide-bg-color);
 }
 
-.createModalBg.open {
-  opacity: 1;
-  pointer-events: visible;
-}
-
-.createModal {
-  top: 10%;
-  opacity: 0;
-  width: 50%;
-  height: 80%;
-  min-width: 500px;
-  border-radius: 8px;
-  position: absolute;
-  pointer-events: none;
-  box-sizing: border-box;
-  transition: all 0.4s ease;
-  z-index: var(--modal-layer);
-  background: var(--modal-bg-color);
-  left: min(25%, calc((100% - 500px) / 2));
-  border: solid 1px var(--border-main-color);
-}
-
-.createModal.open {
+.ModalBg.open {
   opacity: 1;
   pointer-events: visible;
 }
