@@ -115,6 +115,10 @@ button:hover,
   border: solid 2px var(--border-main-color);
 }
 
+.menuButton {
+  background: var(--theme-accent-green);
+}
+
 .menuButton:hover,
 .searchRunButton:hover {
   border: solid 1px var(--theme-main-green);
@@ -164,7 +168,7 @@ body {
   pointer-events: visible;
 }
 
-.createModalButton > p {
+.saveModalButton > p {
   font-weight: 600;
 }
 
@@ -194,16 +198,41 @@ body {
 }
 
 .titleBar {
+  display: flex;
+  align-items: center;
   -webkit-app-region: drag; /* ドラッグでウィンドウ移動 */
+  box-sizing: border-box;
+  justify-content: center;
   height: var(--title-bar-height);
   background: var(--title-bar-bg-color);
-  box-sizing: border-box;
   border-bottom: solid 1px var(--border-main-color);
 }
 
 .titleBarBox {
   height: 90%;
+  display: grid;
+  align-items: center;
   width: calc(100% - var(--title-side-gap) * 2);
+  grid-template-columns: var(--title-box-width) auto var(--layout-box-width);
+}
+
+.titleWrap {
+  gap: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.titleBox {
+  gap: 6px;
+  display: flex;
+  align-items: center;
+}
+
+.titleMenuWrap {
+  gap: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .title {
@@ -212,12 +241,39 @@ body {
 }
 
 .headerItem {
+  border: none;
   font-size: 11px;
   font-weight: 500;
 }
 
+.layoutBox {
+  gap: 20px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+
+.layoutBox button {
+  border: none;
+}
+
 .titleBar button {
   -webkit-app-region: no-drag; /* ボタンはクリック可能に */
+}
+
+.sideNav {
+  width: 85%;
+  display: grid;
+  grid-gap: 22px;
+  padding: var(--side-nav-vertical-gap) 0;
+  grid-template-rows: auto 1px var(--create-button-height);
+}
+
+.sideNavTitleWrap {
+  gap: 6px;
+  display: flex;
+  align-items: center;
 }
 
 .sideNavContainer {
@@ -257,8 +313,12 @@ body {
 }
 
 .sideNavItem {
+  display: flex;
+  cursor: pointer;
   padding: 3px 8px;
   border-radius: 3px;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .sideNavItem p {
@@ -291,24 +351,75 @@ body {
   color: var(--theme-main-green);
 }
 
-.createText {
+.sideNavItemInner {
+  gap: 11px;
+  display: flex;
+  align-items: center;
+}
+
+.sideNavItemDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--theme-main-green);
+}
+
+.sideNavPartation {
+  width: 100%;
+  height: 1px;
+  margin-top: 20px;
+  background: var(--border-main-color);
+}
+
+.sideNavButtonPartation {
+  width: 100%;
+  height: 100%;
+  background: var(--border-main-color);
+}
+
+.saveText {
   font-weight: 600;
   transition: all 0.4s ease;
   width: calc(100% - var(--create-button-height));
 }
 
-.createModalButton:hover .createText {
+.saveModalButton:hover .saveText {
   width: 100%;
   color: rgb(230, 230, 230);
 }
 
 .copyButton {
+  right: 0;
+  z-index: 10;
+  bottom: 16px;
+  font-size: 9px;
   font-weight: 600;
+  border-radius: 8px;
+  position: absolute;
+  padding: 3.5px 15px;
+  box-sizing: border-box;
+  background: rgb(50, 62, 50);
   border: solid 2px var(--border-main-color);
 }
 
 .copyButton:hover {
   border: solid 2px var(--border-hover-color);
+}
+
+.editButton {
+  border: none;
+  cursor: pointer;
+  font-size: 10px;
+  border-radius: 3px;
+  color: var(--theme-main-green);
+}
+
+.deleteButton {
+  border: none;
+  font-size: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  color: var(--theme-main-green);
 }
 
 .editButton:hover,
@@ -341,12 +452,33 @@ body {
   transition: all 0.4 ease;
 }
 
-.createModalButton:hover .imgBox {
+.saveModalButton {
+  display: flex;
+  font-size: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 3px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  background: var(--border-main-color);
+  border: solid 1px var(--border-main-color);
+}
+
+.saveModalButton:hover .imgBox {
   width: 100%;
 }
 
-.createModalButton:hover .imgBox > span {
+.saveModalButton:hover .imgBox > span {
   opacity: 0;
+}
+
+.saveTextWrap {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: right;
 }
 
 .filterSub {
@@ -356,7 +488,18 @@ body {
 }
 
 .mainScrollWrap {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
   container-type: size;
+}
+
+.mainWrap {
+  display: grid;
+  min-width: 600px;
+  position: relative;
+  grid-template-rows: 100px auto;
+  height: calc(100vh - var(--title-bar-height));
 }
 
 .searchContainer {
@@ -370,7 +513,14 @@ body {
 
 .searchBox {
   gap: 8px;
-  display: flex;
+  display: grid;
+  width: calc(100% - 2 * var(--search-side-gap));
+  grid-template-columns:
+    calc(
+      2 * (var(--style-box-side) + var(--style-box-padding)) +
+        var(--style-box-gap)
+    )
+    auto var(--search-menu-button) var(--search-menu-button);
 }
 
 .searchWindow {
@@ -387,9 +537,23 @@ body {
 }
 
 .styleChangeContainer {
+  width: 100%;
+  display: flex;
   border-radius: 6px;
+  align-items: center;
   box-sizing: border-box;
+  justify-content: center;
+  background: var(--border-main-color);
   border: solid 1px var(--border-main-color);
+  height: calc(var(--style-box-side) + 2 * var(--style-box-padding));
+}
+
+.styleChangeBox {
+  display: flex;
+  justify-content: center;
+  gap: var(--style-box-gap);
+  height: var(--style-box-side);
+  width: calc(2px + 2 * var(--style-box-side));
 }
 
 .styleGridBox,
@@ -416,8 +580,18 @@ body {
 }
 
 .searchWindowText {
+  margin: 0;
+  border: none;
+  height: 100%;
   font-size: 13px;
+  padding: 0 14px;
+  background: none;
+  width: calc(100% - 28px);
   color: var(--side-nav-text-color);
+}
+
+.searchRunButton {
+  background: var(--theme-sub-green);
 }
 
 .codeCardContainer {
@@ -444,8 +618,36 @@ body {
   display: none;
 }
 
+.mainContainer {
+  width: 100%;
+  height: calc(100vh - var(--title-bar-height));
+}
+
+.mainContent {
+  display: grid;
+  grid-template-columns: 225px auto;
+}
+
+.codeCardScrollWrap {
+  height: 100%;
+  overflow: auto;
+}
+
+.codeCardWrap {
+  padding: var(--search-vertical-gap) 0 calc(var(--search-vertical-gap) + 25px);
+  width: calc(100% - 2 * var(--search-side-gap));
+}
+
 .codeCardBox {
   width: 100%;
+  display: grid;
+  grid-gap: 20px;
+}
+
+.sideNavScrollWrap {
+  width: 100%;
+  overflow: auto;
+  height: calc(100vh - var(--title-bar-height));
 }
 
 @container (min-width: 200px) {
@@ -485,9 +687,13 @@ body {
 .codeCard {
   width: 100%;
   height: 100%;
+  height: 260px;
+  display: grid;
+  cursor: pointer;
   overflow: hidden;
   border-radius: 5px;
   transition: all 0.4s ease;
+  grid-template-rows: 0.55fr 0.45fr;
   border: solid 2px var(--border-main-color);
 }
 
@@ -497,6 +703,11 @@ body {
 }
 
 .codeArea {
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  justify-content: center;
   background: var(--code-bg-color);
 }
 
@@ -510,8 +721,27 @@ body {
   background: linear-gradient(to top, rgb(32, 36, 32), transparent);
 }
 
+.codeWrap {
+  width: 96%;
+  margin-top: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
 .codeInfoArea {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: center;
   background: var(--code-info-bg-color);
+  border-top: solid 1px var(--border-main-color);
+}
+
+.codeInfoWrap {
+  width: 90%;
+  height: 74%;
 }
 
 .codeMain {
@@ -529,6 +759,12 @@ body {
   -webkit-box-orient: vertical;
 }
 
+.codeLangArea {
+  gap: 8px;
+  display: flex;
+  align-items: center;
+}
+
 .codeLang {
   font-size: 12px;
   padding: 0 10px;
@@ -537,12 +773,26 @@ body {
   box-sizing: border-box;
 }
 
+.codeTagArea {
+  gap: 4px;
+  margin-top: 8px;
+  display: inline-flex;
+}
+
 .codeTag {
   font-size: 10px;
   padding: 2px 6px;
   border-radius: 3px;
   background: var(--tag-bg-color);
   border: solid 1px var(--border-main-color);
+}
+
+.codeButtonsWrap {
+  gap: 8px;
+  display: flex;
+  margin-top: 6px;
+  align-items: center;
+  justify-content: right;
 }
 
 pre .hljs {
@@ -563,4 +813,28 @@ pre span.hljs-keyword {
 
 pre span.hljs-attr {
   color: rgb(91, 207, 116);
+}
+
+.bottomMenuBar {
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  position: absolute;
+  box-sizing: border-box;
+  justify-content: right;
+  height: var(--bottom-menu-bar-height);
+  background: var(--search-window-bg-color);
+  border-top: solid 2px var(--border-main-color);
+}
+
+.bottomMenuBarWrap {
+  height: 100%;
+  display: flex;
+  padding: 0 22px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: var(--theme-sub-green);
+  border-left: solid 2px var(--border-hover-color);
 }

@@ -83,13 +83,13 @@
   cursor: pointer;
 }
 
-.editButton {
+.modalEditButton {
   gap: 5px;
   display: flex;
   cursor: pointer;
   font-size: 10px;
-  border-radius: 5px;
   padding: 4px 15px;
+  border-radius: 5px;
   align-items: center;
   box-sizing: border-box;
   color: var(--theme-main-green);
@@ -97,7 +97,7 @@
   border: solid 1px rgb(160, 220, 160, 0.4);
 }
 
-.deleteButton {
+.modalDeleteButton {
   gap: 5px;
   display: flex;
   cursor: pointer;

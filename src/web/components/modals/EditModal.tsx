@@ -1,4 +1,3 @@
-import "../../styles/modal.css";
 import { Modal } from "../../types/types";
 import { useAppContext } from "../../context/AppContext";
 

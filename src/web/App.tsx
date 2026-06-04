@@ -7,6 +7,8 @@ import typescript from "highlight.js/lib/languages/typescript";
 import javascript from "highlight.js/lib/languages/javascript";
 
 import "./App.css";
+import "./styles/modal.css";
+
 import { useEffect, useState } from "react";
 import TitleBar from "./components/TitleBar";
 import SideBar from "./components/SideBar";
@@ -65,44 +67,18 @@ export const App = () => {
     <>
       <div>
         <TitleBar />
-        <div
-          className="mainContainer"
-          style={{
-            width: "100%",
-            height: "calc(100vh - var(--title-bar-height))",
-          }}
-        >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "225px auto",
-            }}
-          >
+        <div className="mainContainer">
+          <div className="mainContent">
             <SideBar />
             <SaveModal />
             <DisplayModal />
             <EditModal />
             <MenuModal />
-            <div
-              className="mainScrollWrap"
-              style={{ width: "100%", height: "100%", overflow: "auto" }}
-            >
-              <div
-                className="MainWrap"
-                style={{
-                  display: "grid",
-                  minWidth: "600px",
-                  position: "relative",
-                  gridTemplateRows: "100px auto",
-                  height: "calc(100vh - var(--title-bar-height))",
-                }}
-              >
+            <div className="mainScrollWrap">
+              <div className="mainWrap">
                 <BottomCountBar />
                 <SearchBox listStyle={listStyle} setListStyle={setListStyle} />
-                <div
-                  className="codeCardScrollWrap"
-                  style={{ height: "100%", overflow: "auto" }}
-                >
+                <div className="codeCardScrollWrap">
                   <CodeList listStyle={listStyle} />
                 </div>
               </div>

@@ -1,4 +1,3 @@
-import "../../styles/modal.css";
 import { useAppContext } from "../../context/AppContext";
 
 export default function MenuModal() {

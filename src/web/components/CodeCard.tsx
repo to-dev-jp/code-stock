@@ -29,12 +29,6 @@ export default function CodeCard({ code }: { code: Code }) {
   return (
     <div
       className="codeCard"
-      style={{
-        height: "260px",
-        display: "grid",
-        cursor: "pointer",
-        gridTemplateRows: "0.55fr 0.45fr",
-      }}
       onClick={() => {
         setDisplayData({
           ...code,
@@ -43,24 +37,8 @@ export default function CodeCard({ code }: { code: Code }) {
         });
       }}
     >
-      <div
-        className="codeArea"
-        style={{
-          height: "100%",
-          display: "flex",
-          overflow: "hidden",
-          position: "relative",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "96%",
-            marginTop: "10px",
-            overflow: "hidden",
-            position: "relative",
-          }}
-        >
+      <div className="codeArea">
+        <div className="codeWrap">
           <div className="codeMain">
             <pre>
               <code
@@ -74,17 +52,6 @@ export default function CodeCard({ code }: { code: Code }) {
           </div>
           <button
             className="copyButton"
-            style={{
-              right: "0",
-              zIndex: "10",
-              bottom: "16px",
-              fontSize: "9px",
-              borderRadius: "8px",
-              position: "absolute",
-              padding: "3.5px 15px",
-              boxSizing: "border-box",
-              background: "rgb(50,62,50)",
-            }}
             onClick={(e) => {
               e.stopPropagation();
               navigator.clipboard.writeText(code.code);
@@ -95,26 +62,9 @@ export default function CodeCard({ code }: { code: Code }) {
           </button>
         </div>
       </div>
-      <div
-        className="codeInfoArea"
-        style={{
-          height: "100%",
-          overflow: "hidden",
-          display: "flex",
-          alignItems: "center",
-          boxSizing: "border-box",
-          justifyContent: "center",
-          borderTop: "solid 1px var(--border-main-color)",
-        }}
-      >
-        <div style={{ height: "74%", width: "90%" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "8px",
-            }}
-          >
+      <div className="codeInfoArea">
+        <div className="codeInfoWrap">
+          <div className="codeLangArea">
             <p
               className="codeLang"
               style={{
@@ -136,17 +86,8 @@ export default function CodeCard({ code }: { code: Code }) {
             </p>
             <p className="codeTitle">{code.title}</p>
           </div>
-          <div
-            style={{
-              marginTop: "8px",
-            }}
-          >
-            <div
-              style={{
-                gap: "4px",
-                display: "inline-flex",
-              }}
-            >
+          <div>
+            <div className="codeTagArea">
               {code.tags.map((tag, i) => {
                 return (
                   <span className="codeTag" key={"tag-" + i}>
@@ -155,15 +96,7 @@ export default function CodeCard({ code }: { code: Code }) {
                 );
               })}
             </div>
-            <div
-              style={{
-                gap: "8px",
-                display: "flex",
-                marginTop: "6px",
-                alignItems: "center",
-                justifyContent: "right",
-              }}
-            >
+            <div className="codeButtonsWrap">
               <button
                 className="editButton"
                 onClick={(e) => {
@@ -178,13 +111,6 @@ export default function CodeCard({ code }: { code: Code }) {
                   });
                   setEditTags(code.tags);
                 }}
-                style={{
-                  color: "var(--theme-main-green)",
-                  fontSize: "10px",
-                  cursor: "pointer",
-                  borderRadius: "3px",
-                  border: "none",
-                }}
               >
                 <img src={edit} width={20} height={20} title="コードの編集" />
               </button>
@@ -196,13 +122,6 @@ export default function CodeCard({ code }: { code: Code }) {
                   const confirm =
                     window.confirm("本当に削除してもよろしいですか?");
                   if (confirm) handleDelete(code.id);
-                }}
-                style={{
-                  color: "var(--theme-main-green)",
-                  fontSize: "10px",
-                  cursor: "pointer",
-                  borderRadius: "3px",
-                  border: "none",
                 }}
               >
                 <img src={trash} width={18} height={18} title="コードの削除" />

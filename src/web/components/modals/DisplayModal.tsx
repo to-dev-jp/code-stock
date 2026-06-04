@@ -1,5 +1,3 @@
-// 画像URL
-import "../../styles/modal.css";
 import hljs from "highlight.js/lib/core";
 import { useEffect, useRef } from "react";
 import edit from "../../../assets/edit-green.png";
@@ -83,7 +81,7 @@ export default function DisplayModal() {
             キャンセル
           </button>
           <button
-            className="editButton"
+            className="modalEditButton"
             onClick={(e) => {
               e.stopPropagation();
               setCurrentModal({
@@ -102,7 +100,7 @@ export default function DisplayModal() {
           </button>
           <button
             type="button"
-            className="deleteButton"
+            className="modalDeleteButton"
             onClick={(e) => {
               e.stopPropagation();
               const confirm = window.confirm("本当に削除してもよろしいですか?");
