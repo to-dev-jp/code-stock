@@ -18,4 +18,5 @@ contextBridge.exposeInMainWorld("dbOp", {
   maximizeWindow: () => ipcRenderer.invoke("maximizeWindow"),
   unmaximizeWindow: () => ipcRenderer.invoke("unmaximizeWindow"),
   isMaximized: () => ipcRenderer.invoke("isMaximized"),
+  exportCodes: async () => ipcRenderer.invoke("exportCodes"),
 });

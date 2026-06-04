@@ -50,20 +50,20 @@ export default function SearchBox({
           </div>
         </div>
         <button
-          className="searchRunButton"
+          className="favModalButton"
+          onClick={() => {
+            setCurrentModal({ isOpen: true, is: "fav" });
+          }}
+        >
+          ☰ FAV
+        </button>
+        <button
+          className="logModalButton"
           onClick={() => {
             setCurrentModal({ isOpen: true, is: "log" });
           }}
         >
           ☰ LOG
-        </button>
-        <button
-          className="menuButton"
-          onClick={() => {
-            setCurrentModal({ isOpen: true, is: "menu" });
-          }}
-        >
-          ☰ MENU
         </button>
       </div>
     </div>

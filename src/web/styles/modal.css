@@ -2,7 +2,10 @@
 .displayModal,
 .editModal,
 .saveModal,
-.menuModal {
+.logModal,
+.favModal,
+.themeModal,
+.helpModal {
   top: 10%;
   opacity: 0;
   width: 50%;
@@ -25,7 +28,10 @@
 .displayModal.open,
 .editModal.open,
 .saveModal.open,
-.menuModal.open {
+.logModal.open,
+.favModal.open,
+.themeModal.open,
+.helpModal.open {
   opacity: 1;
   pointer-events: visible;
 }

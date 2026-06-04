@@ -43,13 +43,6 @@ const common: Configuration = {
         loader: "ts-loader",
       },
       {
-        // 拡張子 ".css" （正規表現）のファイル
-        test: /\.css$/,
-        // use 配列に指定したローダーは *最後尾から* 順に適用される
-        // セキュリティ対策のため style-loader は使用しない
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
-      },
-      {
         // 画像やフォントなどのアセット類
         test: /\.(ico|png|svg|eot|woff?2?)$/,
         /**
@@ -57,6 +50,16 @@ const common: Configuration = {
          * なお、webpack@5.x では file-loader or url-loader は不要になった
          */
         type: "asset/resource",
+      },
+      {
+        test: /\.css$/,
+        resourceQuery: /url/, // ?url が付いたものだけ
+        type: "asset/resource",
+      },
+      {
+        test: /\.css$/,
+        resourceQuery: { not: [/url/] }, // ?url が付かない通常のCSS
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },

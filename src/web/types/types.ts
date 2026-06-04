@@ -86,5 +86,6 @@ export interface ElectronWindow extends Window {
     maximizeWindow: () => void;
     unmaximizeWindow: () => void;
     isMaximized: () => Promise<boolean>;
+    exportCodes: () => Promise<{ success: boolean; error?: string }>;
   };
 }

@@ -18,8 +18,9 @@ import DisplayModal from "./components/modals/DisplayModal";
 import EditModal from "./components/modals/EditModal";
 import BottomCountBar from "./components/BottomCountBar";
 import SearchBox from "./components/SearchBox";
-import MenuModal from "./components/modals/MenuModal";
 import { useAppContext } from "./context/AppContext";
+import LogModal from "./components/modals/LogModal";
+import FavModal from "./components/modals/FavModal";
 
 // highlight.jsの言語登録
 hljs.registerLanguage("go", go);
@@ -73,7 +74,8 @@ export const App = () => {
             <SaveModal />
             <DisplayModal />
             <EditModal />
-            <MenuModal />
+            <FavModal />
+            <LogModal />
             <div className="mainScrollWrap">
               <div className="mainWrap">
                 <BottomCountBar />

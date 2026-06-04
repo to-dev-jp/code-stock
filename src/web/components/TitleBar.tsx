@@ -5,10 +5,19 @@ import min from "../../assets/minimize.png";
 import max from "../../assets/maximize.png";
 import unmax from "../../assets/unmaximize.png";
 import { useAppContext } from "../context/AppContext";
+import { ElectronWindow } from "../types/types";
+import { useState } from "react";
+import ThemeModal from "./modals/ThemeModal";
+import HelpModal from "./modals/HelpModal";
+
+declare const window: ElectronWindow;
 
 export default function TitleBar() {
   const { isMax, handleMaximize, closeWindow, minimizeWindow } =
     useAppContext();
+  const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
+  const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+
   return (
     <div className="titleBar">
       <div className="titleBarBox">
@@ -18,13 +27,40 @@ export default function TitleBar() {
             <h1 className="title">Code Stock</h1>
           </div>
           <div className="titleMenuWrap">
-            <button className="headerItem" title="COMING SOON...">
-              File
+            <button
+              onClick={async () => {
+                const res = await window.dbOp.exportCodes();
+                if (res.success) {
+                  // 成功通知（トーストなど）
+                  console.log("success");
+                } else {
+                  // res.error を表示
+                  console.log(res.error);
+                }
+              }}
+              className="headerItem"
+              title="JSONファイルをエクスポート"
+            >
+              Export
             </button>
-            <button className="headerItem" title="COMING SOON...">
+            <button
+              className="headerItem"
+              title="シンタックスハイライトカラーの変更"
+              onClick={() => {
+                setIsThemeModalOpen(true);
+                setIsHelpModalOpen(false);
+              }}
+            >
               Settings
             </button>
-            <button className="headerItem" title="COMING SOON...">
+            <button
+              className="headerItem"
+              title="ヘルプ"
+              onClick={() => {
+                setIsHelpModalOpen(true);
+                setIsThemeModalOpen(false);
+              }}
+            >
               Help
             </button>
           </div>
@@ -47,6 +83,11 @@ export default function TitleBar() {
           </button>
         </div>
       </div>
+      <ThemeModal
+        isOpen={isThemeModalOpen}
+        setIsModalOpen={setIsThemeModalOpen}
+      />
+      <HelpModal isOpen={isHelpModalOpen} setIsModalOpen={setIsHelpModalOpen} />
     </div>
   );
 }

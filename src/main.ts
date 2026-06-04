@@ -1,5 +1,7 @@
 import path from "node:path";
+import { dialog } from "electron";
 import { v4 as uuidv4 } from "uuid";
+import { writeFile } from "node:fs/promises";
 import { BrowserWindow, app, ipcMain } from "electron";
 import {
   closeDb,
@@ -137,6 +139,33 @@ app.whenReady().then(() => {
     try {
       const data = getTags();
       return { success: true, data };
+    } catch (e) {
+      return {
+        success: false,
+        error: e instanceof Error ? e.message : "不明なエラーが発生しました",
+      };
+    }
+  });
+
+  ipcMain.handle("exportCodes", async () => {
+    try {
+      // 1. 全スニペットを取得（既存の関数を流用。lang 未指定で全件）
+      const codes = getCodesByLang();
+
+      // 2. 保存ダイアログを表示
+      const { canceled, filePath } = await dialog.showSaveDialog({
+        title: "JSON形式でスニペットをエクスポート",
+        defaultPath: "code-stock-export.json",
+        filters: [{ name: "JSON", extensions: ["json"] }],
+      });
+
+      if (canceled || !filePath) {
+        return { success: false, error: "キャンセルされました" };
+      }
+
+      // 3. JSON にして書き込み
+      await writeFile(filePath, JSON.stringify(codes, null, 2), "utf-8");
+      return { success: true };
     } catch (e) {
       return {
         success: false,
