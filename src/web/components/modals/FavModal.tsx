@@ -1,7 +1,10 @@
 import { useAppContext } from "../../context/AppContext";
+import { Code } from "../../types/types";
+import CodeCard from "../CodeCard";
 
 export default function FavModal() {
-  const { currentModal } = useAppContext();
+  const { currentModal, favCodes } = useAppContext();
+  console.log(favCodes);
   return (
     <>
       <div
@@ -12,7 +15,17 @@ export default function FavModal() {
         }
       >
         <div className="modalWrap">
-          <p>FAV MODAL</p>
+          <p>お気に入りコード一覧</p>
+          <ul>
+            {favCodes &&
+              favCodes.map((code: Code) => {
+                return (
+                  <li key={code.id}>
+                    <CodeCard code={code} />
+                  </li>
+                );
+              })}
+          </ul>
         </div>
       </div>
     </>

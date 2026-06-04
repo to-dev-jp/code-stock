@@ -32,6 +32,7 @@ export const App = () => {
   const {
     codes,
     searchCodes,
+    getFavCodes,
     setFilterOption,
     setCodeCount,
     getLang,
@@ -45,6 +46,7 @@ export const App = () => {
   useEffect(() => {
     getLang();
     getTag();
+    getFavCodes();
     searchCodes("");
     getIsMaximized();
   }, []);

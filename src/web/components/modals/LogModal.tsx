@@ -1,7 +1,7 @@
 import { useAppContext } from "../../context/AppContext";
 
 export default function LogModal() {
-  const { currentModal } = useAppContext();
+  const { currentModal, langs, tagList } = useAppContext();
   return (
     <>
       <div
@@ -12,7 +12,17 @@ export default function LogModal() {
         }
       >
         <div className="modalWrap">
-          <p>LOG MODAL</p>
+          <p>統計情報</p>
+          <div className="bottomMenuBarWrap">
+            <p className="countText">
+              Language count: {langs ? langs.length : 0}
+            </p>
+          </div>
+          <div className="bottomMenuBarWrap">
+            <p className="countText">
+              Tag count: {tagList ? tagList.length : 0}
+            </p>
+          </div>
         </div>
       </div>
     </>

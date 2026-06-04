@@ -1,7 +1,9 @@
 import path from "node:path";
 import { app } from "electron";
+import { dialog } from "electron";
 import Database from "better-sqlite3";
-import { Code, CodeInput, CodeRows } from "../types/types";
+import { writeFile } from "node:fs/promises";
+import { Code, CodeRows } from "../types/types";
 
 let db: Database.Database;
 
@@ -13,13 +15,14 @@ export const createDb = () => {
   const cx = db.transaction(() => {
     db.prepare(
       `CREATE TABLE IF NOT EXISTS codes (
-                id          TEXT PRIMARY KEY,
-                title       TEXT NOT NULL,
-                lang        TEXT NOT NULL,  
-          code        TEXT NOT NULL,
-          note        TEXT,
-          created_at  TEXT NOT NULL
-          );`,
+        id          TEXT PRIMARY KEY,
+        title       TEXT NOT NULL,
+        lang        TEXT NOT NULL,  
+        code        TEXT NOT NULL,
+        note        TEXT,
+        is_favorite INTEGER DEFAULT 0,
+        created_at  TEXT NOT NULL
+        );`,
     ).run();
 
     db.prepare(
@@ -32,9 +35,9 @@ export const createDb = () => {
     db.prepare(
       `CREATE TABLE IF NOT EXISTS code_tags (
         code_id TEXT NOT NULL REFERENCES codes(id) ON DELETE CASCADE,
-  tag_id  INTEGER NOT NULL REFERENCES tags(id) ON DELETE CASCADE,
-  PRIMARY KEY (code_id, tag_id)
-);`,
+        tag_id  INTEGER NOT NULL REFERENCES tags(id) ON DELETE CASCADE,
+        PRIMARY KEY (code_id, tag_id)
+        );`,
     ).run();
 
     db.prepare(
@@ -188,6 +191,62 @@ export const deleteCode = (id: string) => {
     WHERE id = ?;
   `,
   ).run(id);
+};
+
+export const exportJson = async () => {
+  const codes = getCodesByLang();
+
+  const { canceled, filePath } = await dialog.showSaveDialog({
+    title: "JSON形式でスニペットをエクスポート",
+    defaultPath: "code-stock-export.json",
+    filters: [{ name: "JSON", extensions: ["json"] }],
+  });
+
+  if (canceled || !filePath) {
+    return { success: false, error: "キャンセルされました" };
+  }
+
+  await writeFile(filePath, JSON.stringify(codes, null, 2), "utf-8");
+};
+
+export const addFav = (id: string) => {
+  db.prepare(
+    `
+    UPDATE codes SET is_favorite = 1
+    WHERE id = ?
+    `,
+  ).run(id);
+};
+
+export const removeFav = (id: string) => {
+  db.prepare(
+    `
+    UPDATE codes SET is_favorite = 0
+    WHERE id = ?
+    `,
+  ).run(id);
+};
+
+export const getFavCodes = () => {
+  const rows = db
+    .prepare(
+      `
+    SELECT c.*,
+      GROUP_CONCAT(t.name) AS tags
+    FROM codes c
+    LEFT JOIN code_tags ct ON c.id = ct.code_id
+    LEFT JOIN tags t       ON ct.tag_id = t.id
+    WHERE is_favorite = 1
+    GROUP BY c.id
+    ORDER BY c.created_at DESC
+  `,
+    )
+    .all() as Array<CodeRows>;
+
+  return rows.map((r) => ({
+    ...r,
+    tags: r.tags ? r.tags.split(",") : [],
+  }));
 };
 
 export const closeDb = () => db.close();

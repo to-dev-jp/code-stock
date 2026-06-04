@@ -30,4 +30,5 @@ export const blankData = {
   created_at: "",
   tags: [""],
   isOpen: false,
+  is_favorite: 0,
 };

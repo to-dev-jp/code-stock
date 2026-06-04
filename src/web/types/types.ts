@@ -34,6 +34,7 @@ export type Code = {
   note: string | null;
   created_at: string;
   tags: string[];
+  is_favorite: number;
 };
 
 export type CodeRows = {
@@ -44,6 +45,7 @@ export type CodeRows = {
   note: string | null;
   created_at: string;
   tags: string;
+  is_favorite: number;
 };
 
 export type DisplayData = {
@@ -55,6 +57,7 @@ export type DisplayData = {
   created_at: string;
   tags: Array<string>;
   isOpen: boolean;
+  is_favorite: number;
 };
 
 export type Modal = {
@@ -87,5 +90,8 @@ export interface ElectronWindow extends Window {
     unmaximizeWindow: () => void;
     isMaximized: () => Promise<boolean>;
     exportCodes: () => Promise<{ success: boolean; error?: string }>;
+    addFav: (id: string) => Promise<DbResponse>;
+    removeFav: (id: string) => Promise<DbResponse>;
+    getFavCodes: () => Promise<DbResponse>;
   };
 }

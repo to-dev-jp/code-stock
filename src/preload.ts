@@ -19,4 +19,7 @@ contextBridge.exposeInMainWorld("dbOp", {
   unmaximizeWindow: () => ipcRenderer.invoke("unmaximizeWindow"),
   isMaximized: () => ipcRenderer.invoke("isMaximized"),
   exportCodes: async () => ipcRenderer.invoke("exportCodes"),
+  addFav: async (id: string) => ipcRenderer.invoke("addFav", id), //お気に入りを削除
+  removeFav: async (id: string) => ipcRenderer.invoke("removeFav", id), //お気に入りを追加
+  getFavCodes: async () => ipcRenderer.invoke("getFavCodes"),
 });

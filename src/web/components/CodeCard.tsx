@@ -1,5 +1,7 @@
 // 画像URL
 import edit from "../../assets/edit-green.png";
+import fav from "../../assets/fav-green.png";
+import unfav from "../../assets/edit-green.png";
 import trash from "../../assets/delete-green.png";
 
 import { Code } from "../types/types";
@@ -15,6 +17,9 @@ export default function CodeCard({ code }: { code: Code }) {
     handleDelete,
     setCurrentModal,
     setDisplayData,
+    addFav,
+    removeFav,
+    refleshFavCodes,
   } = useAppContext();
 
   const codeRef = useRef<HTMLElement>(null);
@@ -97,6 +102,39 @@ export default function CodeCard({ code }: { code: Code }) {
               })}
             </div>
             <div className="codeButtonsWrap">
+              {code.is_favorite === 1 ? (
+                <button
+                  className="editButton"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeFav(code.id);
+                    refleshFavCodes();
+                  }}
+                >
+                  <img
+                    src={unfav}
+                    width={20}
+                    height={20}
+                    title="お気に入りから削除する"
+                  />
+                </button>
+              ) : (
+                <button
+                  className="editButton"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addFav(code.id);
+                    refleshFavCodes();
+                  }}
+                >
+                  <img
+                    src={fav}
+                    width={20}
+                    height={20}
+                    title="お気に入りに追加する"
+                  />
+                </button>
+              )}
               <button
                 className="editButton"
                 onClick={(e) => {

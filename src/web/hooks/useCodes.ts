@@ -7,6 +7,7 @@ declare const window: ElectronWindow;
 // hooks/useCodes.ts
 export const useCodes = () => {
   const [codes, setCodes] = useState<Code[] | undefined>();
+  const [favCodes, setFavCodes] = useState<Code[] | undefined>();
   const [filterOption, setFilterOption] = useState({
     lang: "",
     tag: "",
@@ -31,6 +32,11 @@ export const useCodes = () => {
     if (result.success) setCodes(result.data);
   };
 
+  const getFavCodes = async () => {
+    const result = await window.dbOp.getFavCodes();
+    if (result.success) setFavCodes(result.data);
+  };
+
   // 保存・編集時のコード一覧のリフレッシュ
   const refleshCodes = async () => {
     let updated: DbResponse;
@@ -47,12 +53,23 @@ export const useCodes = () => {
     }
   };
 
+  const refleshFavCodes = async () => {
+    const updated = await window.dbOp.getFavCodes();
+    console.log(updated);
+    if (updated.success) {
+      setFavCodes(updated.data);
+    }
+  };
+
   return {
     codes,
+    favCodes,
     getCodeByLang,
     getCodeByTag,
     searchCodes,
+    getFavCodes,
     refleshCodes,
+    refleshFavCodes,
     filterOption,
     setFilterOption,
     codeCount,
@@ -230,7 +247,26 @@ export const useHandleData = ({
       refleshCodes();
     } else {
       console.log(result.error);
-      return;
+    }
+  };
+
+  const addFav = async (id: string) => {
+    const result = await window.dbOp.addFav(id);
+    if (result.success) {
+      console.log("お気に入りに追加しました");
+      refleshCodes();
+    } else {
+      console.log("お気に入り追加に失敗しました:" + result.error);
+    }
+  };
+
+  const removeFav = async (id: string) => {
+    const result = await window.dbOp.removeFav(id);
+    if (result.success) {
+      console.log("お気に入りから削除しました");
+      refleshCodes();
+    } else {
+      console.log("お気に入り削除に失敗しました:" + result.error);
     }
   };
 
@@ -254,5 +290,7 @@ export const useHandleData = ({
     handleEditTagKeyDown,
     editTags,
     removeEditTag,
+    addFav,
+    removeFav,
   };
 };
