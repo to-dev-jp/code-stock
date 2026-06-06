@@ -1,7 +1,10 @@
-import { useAppContext } from "../../context/AppContext";
+import { useModalsContext } from "../../context/provider/ModalsProvider";
+import { useLangs, useTags } from "../../hooks/useLangsAndTags";
 
 export default function LogModal() {
-  const { currentModal, langs, tagList } = useAppContext();
+  const { currentModal } = useModalsContext();
+  const { data: langs } = useLangs();
+  const { data: tags } = useTags();
   return (
     <>
       <div
@@ -19,9 +22,7 @@ export default function LogModal() {
             </p>
           </div>
           <div className="bottomMenuBarWrap">
-            <p className="countText">
-              Tag count: {tagList ? tagList.length : 0}
-            </p>
+            <p className="countText">Tag count: {tags ? tags.length : 0}</p>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import javascript from "highlight.js/lib/languages/javascript";
 
 import "./App.css";
 import "./styles/modal.css";
+import "./styles/toast.css";
 
 import { useEffect, useState } from "react";
 import TitleBar from "./components/TitleBar";
@@ -18,9 +19,11 @@ import DisplayModal from "./components/modals/DisplayModal";
 import EditModal from "./components/modals/EditModal";
 import BottomCountBar from "./components/BottomCountBar";
 import SearchBox from "./components/SearchBox";
-import { useAppContext } from "./context/AppContext";
 import LogModal from "./components/modals/LogModal";
 import FavModal from "./components/modals/FavModal";
+import { useWindowStateContext } from "./context/provider/WindowStateProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ModalBg from "./components/modals/ModalBg";
 
 // highlight.jsの言語登録
 hljs.registerLanguage("go", go);
@@ -28,68 +31,54 @@ hljs.registerLanguage("go", go);
 hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("typescript", typescript);
 
-export const App = () => {
-  const {
-    codes,
-    searchCodes,
-    getFavCodes,
-    setFilterOption,
-    setCodeCount,
-    getLang,
-    getTag,
-    getIsMaximized,
-  } = useAppContext();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+      refetchOnWindowFocus: false, // フォーカス時の再取得も切る
+    },
+  },
+});
 
-  const [isInitial, setIsInitial] = useState(true); //起動時の処理用
+export const App = () => {
+  const { getIsMaximized } = useWindowStateContext();
+
   const [listStyle, setListStyle] = useState("grid"); //コード一覧の表示形式
 
   useEffect(() => {
-    getLang();
-    getTag();
-    getFavCodes();
-    searchCodes("");
     getIsMaximized();
   }, []);
 
-  useEffect(() => {
-    // コードのシンタックスハイライト処理
-    if (!codes) return;
-    // 起動時のフィルターの処理
-    if (!isInitial) return;
-    setCodeCount(codes.length);
-    setFilterOption({
-      lang: "",
-      tag: "",
-      is: "all",
-      count: codes.length,
-    });
-    setIsInitial(false);
-  }, [codes]);
-
   return (
     <>
-      <div>
-        <TitleBar />
-        <div className="mainContainer">
-          <div className="mainContent">
-            <SideBar />
-            <SaveModal />
-            <DisplayModal />
-            <EditModal />
-            <FavModal />
-            <LogModal />
-            <div className="mainScrollWrap">
-              <div className="mainWrap">
-                <BottomCountBar />
-                <SearchBox listStyle={listStyle} setListStyle={setListStyle} />
-                <div className="codeCardScrollWrap">
-                  <CodeList listStyle={listStyle} />
+      <QueryClientProvider client={queryClient}>
+        <div>
+          <TitleBar />
+          <div className="mainContainer">
+            <div className="mainContent">
+              <SideBar />
+              <ModalBg />
+              <FavModal />
+              <LogModal />
+              <DisplayModal />
+              <SaveModal />
+              <EditModal />
+              <div className="mainScrollWrap">
+                <div className="mainWrap">
+                  <BottomCountBar />
+                  <SearchBox
+                    listStyle={listStyle}
+                    setListStyle={setListStyle}
+                  />
+                  <div className="codeCardScrollWrap">
+                    <CodeList listStyle={listStyle} />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </QueryClientProvider>
     </>
   );
 };

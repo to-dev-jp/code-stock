@@ -2,6 +2,7 @@
   --main-layer: 1;
   --modal-bg-layer: 10;
   --modal-layer: 100;
+  --toast-layer: 1000;
 
   --title-bar-height: 36px;
   --title-side-gap: 10px;

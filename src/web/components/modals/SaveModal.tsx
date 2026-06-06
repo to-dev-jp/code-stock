@@ -1,9 +1,13 @@
-import { useAppContext } from "../../context/AppContext";
-import { DisplayData, Modal } from "../../types/types";
+import { Modal, ToastError } from "../../types/types";
+import { useModalsContext } from "../../context/provider/ModalsProvider";
+import { useSaveContext } from "../../context/provider/SaveProvider";
+import { useCodeMutations } from "../../hooks/mutations";
+import { useState } from "react";
+import { validationCheck } from "../../hooks/utils";
+import Toast from "../toasts/Toast";
 
 export default function SaveModal() {
   const {
-    handleSubmit,
     codeData,
     handleCodeData,
     tagInput,
@@ -11,29 +15,16 @@ export default function SaveModal() {
     newTags,
     handleTagKeyDown,
     removeTag,
-    currentModal,
-    setCurrentModal,
-    displayData,
-    setDisplayData,
-  } = useAppContext();
+    refreshSubmitData,
+  } = useSaveContext();
+
+  const { currentModal, setCurrentModal } = useModalsContext();
+  const { upsertMutation } = useCodeMutations();
+
+  const [errors, setErrors] = useState<ToastError>({});
 
   return (
     <>
-      <div
-        className={
-          currentModal.isOpen || displayData.isOpen ? "ModalBg open" : "ModalBg"
-        }
-        onClick={() => {
-          setCurrentModal((prev: Modal) => ({
-            ...prev,
-            isOpen: false,
-          }));
-          setDisplayData((prev: DisplayData) => ({
-            ...prev,
-            isOpen: false,
-          }));
-        }}
-      />
       <div
         className={
           currentModal.isOpen && currentModal.is === "create"
@@ -51,7 +42,14 @@ export default function SaveModal() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              handleSubmit();
+              const pending = tagInput.trim();
+              const finalTags = pending ? [...newTags, pending] : newTags;
+              const finalCodeData = { ...codeData, tags: finalTags };
+              const isOk = validationCheck(finalTags, finalCodeData, setErrors);
+              if (!isOk) return;
+              upsertMutation.mutate(finalCodeData, {
+                onSuccess: () => refreshSubmitData(),
+              });
               setCurrentModal({ isOpen: false, is: "create" });
             }}
             style={{
@@ -61,6 +59,7 @@ export default function SaveModal() {
               gridTemplateColumns: "1fr 1fr",
             }}
           >
+            <Toast errors={errors} setErrors={setErrors} />
             <div>
               <label>
                 <p className="formLabel">タイトル</p>

@@ -1,26 +1,23 @@
 // 画像URL
 import edit from "../../assets/edit-green.png";
 import fav from "../../assets/fav-green.png";
-import unfav from "../../assets/edit-green.png";
+import unfav from "../../assets/unfav-green.png";
 import trash from "../../assets/delete-green.png";
 
 import { Code } from "../types/types";
 import hljs from "highlight.js/lib/core";
-import { LANG_COLORS } from "../const/const";
-import { useAppContext } from "../context/AppContext";
 import { useEffect, useRef } from "react";
+import { LANG_COLORS } from "../const/const";
+import { useModalsContext } from "../context/provider/ModalsProvider";
+import { useEditContext } from "../context/provider/EditProvider";
+import { useCodeMutations } from "../hooks/mutations";
 
 export default function CodeCard({ code }: { code: Code }) {
-  const {
-    setEditData,
-    setEditTags,
-    handleDelete,
-    setCurrentModal,
-    setDisplayData,
-    addFav,
-    removeFav,
-    refleshFavCodes,
-  } = useAppContext();
+  const { setEditData, setEditTags } = useEditContext();
+  const { setCurrentModal, setDisplayData } = useModalsContext();
+
+  const { deleteMutation, addFavMutation, removeFavMutation } =
+    useCodeMutations();
 
   const codeRef = useRef<HTMLElement>(null);
 
@@ -107,12 +104,11 @@ export default function CodeCard({ code }: { code: Code }) {
                   className="editButton"
                   onClick={(e) => {
                     e.stopPropagation();
-                    removeFav(code.id);
-                    refleshFavCodes();
+                    removeFavMutation.mutate(code.id);
                   }}
                 >
                   <img
-                    src={unfav}
+                    src={fav}
                     width={20}
                     height={20}
                     title="お気に入りから削除する"
@@ -123,12 +119,11 @@ export default function CodeCard({ code }: { code: Code }) {
                   className="editButton"
                   onClick={(e) => {
                     e.stopPropagation();
-                    addFav(code.id);
-                    refleshFavCodes();
+                    addFavMutation.mutate(code.id);
                   }}
                 >
                   <img
-                    src={fav}
+                    src={unfav}
                     width={20}
                     height={20}
                     title="お気に入りに追加する"
@@ -159,7 +154,9 @@ export default function CodeCard({ code }: { code: Code }) {
                   e.stopPropagation();
                   const confirm =
                     window.confirm("本当に削除してもよろしいですか?");
-                  if (confirm) handleDelete(code.id);
+                  if (confirm) {
+                    deleteMutation.mutate(code.id);
+                  }
                 }}
               >
                 <img src={trash} width={18} height={18} title="コードの削除" />

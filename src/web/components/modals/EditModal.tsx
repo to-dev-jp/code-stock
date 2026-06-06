@@ -1,9 +1,13 @@
-import { Modal } from "../../types/types";
-import { useAppContext } from "../../context/AppContext";
+import { Modal, ToastError } from "../../types/types";
+import { useEditContext } from "../../context/provider/EditProvider";
+import { useModalsContext } from "../../context/provider/ModalsProvider";
+import { useCodeMutations } from "../../hooks/mutations";
+import Toast from "../toasts/Toast";
+import { validationCheck } from "../../hooks/utils";
+import { useState } from "react";
 
 export default function EditModal() {
   const {
-    handleEdit,
     handleEditData,
     editData,
     editTagInput,
@@ -11,9 +15,13 @@ export default function EditModal() {
     handleEditTagKeyDown,
     editTags,
     removeEditTag,
-    currentModal,
-    setCurrentModal,
-  } = useAppContext();
+    refreshEditData,
+  } = useEditContext();
+
+  const { currentModal, setCurrentModal } = useModalsContext();
+  const { upsertMutation } = useCodeMutations();
+
+  const [errors, setErrors] = useState<ToastError>({});
 
   return (
     <div
@@ -28,18 +36,27 @@ export default function EditModal() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleEdit();
+            const pending = editTagInput.trim();
+            const finalTags = pending ? [...editTags, pending] : editTags;
+            const finalCodeData = { ...editData, tags: finalTags };
+            const isOk = validationCheck(finalTags, finalCodeData, setErrors);
+            if (!isOk) return;
+            upsertMutation.mutate(
+              { ...editData, tags: finalTags },
+              { onSuccess: () => refreshEditData() },
+            );
             setCurrentModal({ isOpen: false, is: "edit" });
           }}
           className="editForm"
         >
+          <Toast errors={errors} setErrors={setErrors} />
           <div>
             <label>
               <p className="formLabel">タイトル</p>
               <input
                 name="title"
                 placeholder="タイトルを入力する"
-                defaultValue={editData.title}
+                value={editData.title}
                 onChange={(e) => {
                   handleEditData(e);
                 }}
@@ -52,7 +69,7 @@ export default function EditModal() {
               <input
                 name="lang"
                 placeholder="言語を入力する"
-                defaultValue={editData.lang}
+                value={editData.lang}
                 onChange={(e) => {
                   handleEditData(e);
                 }}
@@ -84,7 +101,7 @@ export default function EditModal() {
               <textarea
                 name="code"
                 placeholder="コードを入力する"
-                defaultValue={editData.code}
+                value={editData.code}
                 onChange={(e) => {
                   handleEditData(e);
                 }}
@@ -97,7 +114,7 @@ export default function EditModal() {
               <input
                 name="note"
                 placeholder="説明文を入力する"
-                defaultValue={editData.note}
+                value={editData.note}
                 onChange={(e) => {
                   handleEditData(e);
                 }}

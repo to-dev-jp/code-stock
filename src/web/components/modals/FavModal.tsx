@@ -1,10 +1,11 @@
-import { useAppContext } from "../../context/AppContext";
+import { useModalsContext } from "../../context/provider/ModalsProvider";
+import { useFavCodes } from "../../hooks/useCodes";
 import { Code } from "../../types/types";
 import CodeCard from "../CodeCard";
 
 export default function FavModal() {
-  const { currentModal, favCodes } = useAppContext();
-  console.log(favCodes);
+  const { data: favCodes } = useFavCodes();
+  const { currentModal } = useModalsContext();
   return (
     <>
       <div

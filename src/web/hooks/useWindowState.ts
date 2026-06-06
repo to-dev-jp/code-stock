@@ -5,7 +5,7 @@ import { useState } from "react";
 
 declare const window: ElectronWindow;
 
-export const useInit = () => {
+export const useWindowState = () => {
   const [isMax, setIsMax] = useState(false); //ウィンドウが最大化されているか
 
   // 起動時にウィンドウが最大化されているか

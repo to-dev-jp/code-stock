@@ -1,5 +1,8 @@
-import React from "react";
-import { useAppContext } from "../context/AppContext";
+import React, { useState } from "react";
+import { useModalsContext } from "../context/provider/ModalsProvider";
+import { useFilterContext } from "../context/provider/FilterProvider";
+import { useQueryContext } from "../context/provider/QueryProvider";
+import { FilterOption } from "../types/types";
 
 export default function SearchBox({
   listStyle,
@@ -8,7 +11,9 @@ export default function SearchBox({
   listStyle: string;
   setListStyle: React.Dispatch<React.SetStateAction<string>>;
 }) {
-  const { searchCodes, setCurrentModal } = useAppContext();
+  const { setFilterOption } = useFilterContext();
+  const { setCurrentModal } = useModalsContext();
+  const { setQuery } = useQueryContext();
 
   return (
     <div className="searchContainer">
@@ -44,7 +49,10 @@ export default function SearchBox({
               placeholder="コードを検索..."
               onChange={(e) => {
                 const { target } = e;
-                searchCodes(target.value);
+                setQuery(target.value);
+                setFilterOption((prev: FilterOption) => {
+                  return { ...prev, is: "search" };
+                });
               }}
             />
           </div>

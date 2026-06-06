@@ -6,21 +6,20 @@ import { getTagColor } from "../hooks/utils";
 
 // 定数
 import { LANG_COLORS } from "../const/const";
-import { useAppContext } from "../context/AppContext";
-import { Filter, Lang, Tag } from "../types/types";
+import { FilterOption, Lang, Tag } from "../types/types";
+import { useFilterContext } from "../context/provider/FilterProvider";
+import { useAllCodesLength, useCodes } from "../hooks/useCodes";
+import { useModalsContext } from "../context/provider/ModalsProvider";
+import { useLangs, useTags } from "../hooks/useLangsAndTags";
 
 export default function SideBar() {
-  const {
-    getCodeByLang,
-    getCodeByTag,
-    searchCodes,
-    filterOption,
-    setFilterOption,
-    codeCount,
-    setCurrentModal,
-    langs,
-    tagList,
-  } = useAppContext();
+  const { data: langs } = useLangs();
+  const { data: tags } = useTags();
+
+  const { filterOption, setFilterOption } = useFilterContext();
+  const { setCurrentModal } = useModalsContext();
+  const { data: codes } = useCodes(filterOption);
+  const { data: codeLength } = useAllCodesLength();
 
   return (
     <div className="sideNavScrollWrap">
@@ -43,19 +42,17 @@ export default function SideBar() {
                       : "sideNavItem"
                   }
                   onClick={() => {
-                    setFilterOption((prev: Filter) => ({
+                    setFilterOption((prev: FilterOption) => ({
                       ...prev,
                       is: "all",
-                      count: codeCount,
                     }));
-                    searchCodes("");
                   }}
                 >
                   <div className="sideNavItemInner">
                     <span className="sideNavItemDot" />
                     <p>すべて</p>
                   </div>
-                  <span>{codeCount}</span>
+                  <span>{codeLength}</span>
                 </li>
               </ul>
             </div>
@@ -74,13 +71,11 @@ export default function SideBar() {
                       }
                       key={"lang-" + index}
                       onClick={() => {
-                        setFilterOption((prev: Filter) => ({
+                        setFilterOption((prev: FilterOption) => ({
                           ...prev,
                           lang: lang.lang,
                           is: "lang",
-                          count: lang.count,
                         }));
-                        getCodeByLang(lang.lang);
                       }}
                     >
                       <div className="sideNavItemInner">
@@ -108,7 +103,7 @@ export default function SideBar() {
             <div className="sideNavBox">
               <p className="sideNavHead">タグ</p>
               <ul className="sideNavList">
-                {tagList?.map((tag: Tag, index: number) => {
+                {tags?.map((tag: Tag, index: number) => {
                   return (
                     <li
                       className={
@@ -119,13 +114,11 @@ export default function SideBar() {
                       }
                       key={"tag-" + index}
                       onClick={() => {
-                        setFilterOption((prev: Filter) => ({
+                        setFilterOption((prev: FilterOption) => ({
                           ...prev,
                           tag: tag.name,
                           is: "tag",
-                          count: tag.count,
                         }));
-                        getCodeByTag(tag.name);
                       }}
                     >
                       <div className="sideNavItemInner">

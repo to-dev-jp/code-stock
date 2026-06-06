@@ -54,6 +54,7 @@ export const createDb = () => {
 export const upsertCode = (item: Code) => {
   // コード本体を保存
   const tx = db.transaction((it: Code) => {
+    // 編集時にお気に入りへの変更は発生しないので、is_favoriteは除外
     db.prepare(
       `
     INSERT INTO codes (id, title, lang, code, note, created_at)
@@ -206,7 +207,12 @@ export const exportJson = async () => {
     return { success: false, error: "キャンセルされました" };
   }
 
-  await writeFile(filePath, JSON.stringify(codes, null, 2), "utf-8");
+  try {
+    await writeFile(filePath, JSON.stringify(codes, null, 2), "utf-8");
+  } catch (e) {
+    return { success: false, error: "キャンセルされました" };
+  }
+  return { success: true };
 };
 
 export const addFav = (id: string) => {

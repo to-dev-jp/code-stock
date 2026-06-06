@@ -1,33 +1,22 @@
-import { createContext, useContext, useState } from "react";
-import { useCodes, useLangsAndTags, useHandleData } from "../hooks/useCodes";
-import { useModals } from "../hooks/useModals";
-import { useInit } from "../hooks/useInitialize";
-
-const AppContext = createContext<any>(null);
+import { SaveProvider } from "./provider/SaveProvider";
+import { QueryProvider } from "./provider/QueryProvider";
+import { FilterProvider } from "./provider/FilterProvider";
+import { ModalsProvider } from "./provider/ModalsProvider";
+import { WindowStateProvider } from "./provider/WindowStateProvider";
+import { EditProvider } from "./provider/EditProvider";
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const codesHook = useCodes();
-  const langsAndTagsHook = useLangsAndTags();
-  const handleDataHook = useHandleData({
-    refleshCodes: codesHook.refleshCodes,
-    refleshLangsAndTags: langsAndTagsHook.refleshLangsAndTags,
-  });
-  const modalsHook = useModals();
-  const initHook = useInit();
-
   return (
-    <AppContext.Provider
-      value={{
-        ...codesHook,
-        ...langsAndTagsHook,
-        ...handleDataHook,
-        ...modalsHook,
-        ...initHook,
-      }}
-    >
-      {children}
-    </AppContext.Provider>
+    <WindowStateProvider>
+      <EditProvider>
+        <FilterProvider>
+          <QueryProvider>
+            <SaveProvider>
+              <ModalsProvider>{children}</ModalsProvider>
+            </SaveProvider>
+          </QueryProvider>
+        </FilterProvider>
+      </EditProvider>
+    </WindowStateProvider>
   );
 };
-
-export const useAppContext = () => useContext(AppContext);

@@ -13,6 +13,7 @@
   "devDependencies": {
     "@electron/packager": "^18.4.4",
     "@electron/rebuild": "^3.7.2",
+    "@tanstack/eslint-plugin-query": "^5.101.0",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^25.9.1",
     "@types/react": "^19.2.14",
@@ -36,6 +37,8 @@
     "webpack-cli": "^7.0.2"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.101.0",
+    "@tanstack/react-query-devtools": "^5.101.0",
     "better-sqlite3": "^12.8.0",
     "electron-squirrel-startup": "^1.0.0",
     "highlight.js": "^11.11.1",

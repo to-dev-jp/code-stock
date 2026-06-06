@@ -4,17 +4,17 @@ import close from "../../assets/close.png";
 import min from "../../assets/minimize.png";
 import max from "../../assets/maximize.png";
 import unmax from "../../assets/unmaximize.png";
-import { useAppContext } from "../context/AppContext";
 import { ElectronWindow } from "../types/types";
 import { useState } from "react";
 import ThemeModal from "./modals/ThemeModal";
 import HelpModal from "./modals/HelpModal";
+import { useWindowState } from "../hooks/useWindowState";
 
 declare const window: ElectronWindow;
 
 export default function TitleBar() {
   const { isMax, handleMaximize, closeWindow, minimizeWindow } =
-    useAppContext();
+    useWindowState();
   const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
 

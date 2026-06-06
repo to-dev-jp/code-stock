@@ -26,6 +26,12 @@ export type Tag = {
   count: number;
 };
 
+export type FilterOption = {
+  lang: string;
+  tag: string;
+  is: "all" | "lang" | "tag" | "search";
+};
+
 export type Code = {
   id: string;
   title: string;
@@ -65,11 +71,11 @@ export type Modal = {
   isOpen: boolean;
 };
 
-export type Filter = {
-  lang: string;
-  tag: string;
-  is: string;
-  count: number;
+export type ToastError = {
+  title?: string;
+  lang?: string;
+  tags?: string;
+  code?: string;
 };
 
 export type CodeInput = Omit<Code, "id">;

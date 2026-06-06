@@ -99,9 +99,12 @@ app.whenReady().then(() => {
 
   ipcMain.handle("upsertCode", (_e, data) => {
     try {
+      const now = new Date().toISOString();
       const item = {
         ...data,
-        id: data.id ?? uuidv4(), // idがなければ新規生成
+        id: data.id && data.id.length > 0 ? data.id : uuidv4(), // idがなければ新規生成
+        created_at:
+          data.created_at && data.created_at.length > 0 ? data.created_at : now,
       };
       upsertCode(item);
       return { success: true };
@@ -151,7 +154,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle("exportCodes", async () => {
     try {
-      exportJson();
+      await exportJson();
       return { success: true };
     } catch (e) {
       return {

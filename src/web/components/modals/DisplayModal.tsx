@@ -3,17 +3,14 @@ import { useEffect, useRef } from "react";
 import edit from "../../../assets/edit-green.png";
 import trash from "../../../assets/delete-green.png";
 import { blankData, LANG_COLORS } from "../../const/const";
-import { useAppContext } from "../../context/AppContext";
+import { useModalsContext } from "../../context/provider/ModalsProvider";
+import { useEditContext } from "../../context/provider/EditProvider";
+import { useCodeMutations } from "../../hooks/mutations";
 
 export default function DisplayModal() {
-  const {
-    setEditData,
-    setEditTags,
-    handleDelete,
-    displayData,
-    setDisplayData,
-    setCurrentModal,
-  } = useAppContext();
+  const { setEditData, setEditTags } = useEditContext();
+  const { displayData, setDisplayData, setCurrentModal } = useModalsContext();
+  const { deleteMutation } = useCodeMutations();
 
   const codeRef = useRef<HTMLElement>(null);
 
@@ -104,7 +101,7 @@ export default function DisplayModal() {
             onClick={(e) => {
               e.stopPropagation();
               const confirm = window.confirm("本当に削除してもよろしいですか?");
-              if (confirm) handleDelete(displayData.id);
+              if (confirm) deleteMutation.mutate(displayData.id);
             }}
           >
             <p>削除する</p>

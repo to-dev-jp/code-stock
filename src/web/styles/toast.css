@@ -1,0 +1,17 @@
+.toast {
+  opacity: 0;
+  width: 300px;
+  height: 150px;
+  position: fixed;
+  border-radius: 3px;
+  background: white;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  z-index: var(--toast-layer);
+  top: calc((100% - 150px) / 2);
+  left: calc((100% - 300px) / 2);
+}
+
+.toast.show {
+  opacity: 1;
+}
