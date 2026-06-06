@@ -11,10 +11,12 @@ import { LANG_COLORS } from "../const/const";
 import { useModalsContext } from "../context/provider/ModalsProvider";
 import { useEditContext } from "../context/provider/EditProvider";
 import { useCodeMutations } from "../hooks/mutations";
+import { useCopyContext } from "../context/provider/CopyStateProvider";
 
 export default function CodeCard({ code }: { code: Code }) {
   const { setEditData, setEditTags } = useEditContext();
   const { setCurrentModal, setDisplayData } = useModalsContext();
+  const { setIsCopied } = useCopyContext();
 
   const { deleteMutation, addFavMutation, removeFavMutation } =
     useCodeMutations();
@@ -57,6 +59,7 @@ export default function CodeCard({ code }: { code: Code }) {
             onClick={(e) => {
               e.stopPropagation();
               navigator.clipboard.writeText(code.code);
+              setIsCopied(true);
             }}
             title="コードをコピーする"
           >

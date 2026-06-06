@@ -16,7 +16,7 @@ export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
 export const useQueryContext = () => {
   const ctx = useContext(QueryContext);
   if (!ctx) {
-    throw new Error("useQueryContext must be used within RefreshProvider");
+    throw new Error("useQueryContext must be used within QueryProvider");
   }
   return ctx;
 };

@@ -15,18 +15,20 @@ export default function FavModal() {
             : "favModal"
         }
       >
-        <div className="modalWrap">
-          <p>お気に入りコード一覧</p>
-          <ul>
-            {favCodes &&
-              favCodes.map((code: Code) => {
-                return (
-                  <li key={code.id}>
-                    <CodeCard code={code} />
-                  </li>
-                );
-              })}
-          </ul>
+        <div className="modalWrap fav">
+          <p className="favModalTitle">お気に入りコード一覧</p>
+          <div className="favModalListWrap">
+            <ul className="favModalList">
+              {favCodes &&
+                favCodes.map((code: Code) => {
+                  return (
+                    <li key={code.id}>
+                      <CodeCard code={code} />
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
         </div>
       </div>
     </>

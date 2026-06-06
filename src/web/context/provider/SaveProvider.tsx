@@ -16,7 +16,7 @@ export const SaveProvider = ({ children }: { children: React.ReactNode }) => {
 export const useSaveContext = () => {
   const ctx = useContext(SaveContext);
   if (!ctx) {
-    throw new Error("useSaveContext must be used within RefreshProvider");
+    throw new Error("useSaveContext must be used within SaveProvider");
   }
   return ctx;
 };

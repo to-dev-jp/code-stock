@@ -6,17 +6,20 @@ import max from "../../assets/maximize.png";
 import unmax from "../../assets/unmaximize.png";
 import { ElectronWindow } from "../types/types";
 import { useState } from "react";
-import ThemeModal from "./modals/ThemeModal";
+import SettingsModal from "./modals/SettingsModal";
 import HelpModal from "./modals/HelpModal";
 import { useWindowState } from "../hooks/useWindowState";
+import ExportToast from "./toasts/ExportToast";
 
 declare const window: ElectronWindow;
 
 export default function TitleBar() {
   const { isMax, handleMaximize, closeWindow, minimizeWindow } =
     useWindowState();
-  const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
+  const [isToastShow, setIsToastShow] = useState(false);
+  const [isExportSuccess, setIsExportSuccess] = useState(false);
 
   return (
     <div className="titleBar">
@@ -30,13 +33,8 @@ export default function TitleBar() {
             <button
               onClick={async () => {
                 const res = await window.dbOp.exportCodes();
-                if (res.success) {
-                  // 成功通知（トーストなど）
-                  console.log("success");
-                } else {
-                  // res.error を表示
-                  console.log(res.error);
-                }
+                setIsExportSuccess(res.success);
+                setIsToastShow(true);
               }}
               className="headerItem"
               title="JSONファイルをエクスポート"
@@ -47,7 +45,7 @@ export default function TitleBar() {
               className="headerItem"
               title="シンタックスハイライトカラーの変更"
               onClick={() => {
-                setIsThemeModalOpen(true);
+                setIsSettingsModalOpen(true);
                 setIsHelpModalOpen(false);
               }}
             >
@@ -58,7 +56,7 @@ export default function TitleBar() {
               title="ヘルプ"
               onClick={() => {
                 setIsHelpModalOpen(true);
-                setIsThemeModalOpen(false);
+                setIsSettingsModalOpen(false);
               }}
             >
               Help
@@ -83,11 +81,16 @@ export default function TitleBar() {
           </button>
         </div>
       </div>
-      <ThemeModal
-        isOpen={isThemeModalOpen}
-        setIsModalOpen={setIsThemeModalOpen}
+      <SettingsModal
+        isOpen={isSettingsModalOpen}
+        setIsModalOpen={setIsSettingsModalOpen}
       />
       <HelpModal isOpen={isHelpModalOpen} setIsModalOpen={setIsHelpModalOpen} />
+      <ExportToast
+        isShow={isToastShow}
+        setIsShow={setIsToastShow}
+        success={isExportSuccess}
+      />
     </div>
   );
 }

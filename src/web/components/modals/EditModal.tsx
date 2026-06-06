@@ -100,6 +100,7 @@ export default function EditModal() {
               <p className="formLabel">コード本文</p>
               <textarea
                 name="code"
+                className="editCodeContent"
                 placeholder="コードを入力する"
                 value={editData.code}
                 onChange={(e) => {

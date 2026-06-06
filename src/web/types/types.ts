@@ -76,6 +76,7 @@ export type ToastError = {
   lang?: string;
   tags?: string;
   code?: string;
+  shownAt?: number;
 };
 
 export type CodeInput = Omit<Code, "id">;

@@ -1,10 +1,66 @@
+/* SaveModal */
+
+.ModalBg {
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  z-index: var(--modal-layer);
+  background: var(--modal-hide-bg-color);
+}
+
+.ModalBg.open {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.saveModalButton > p {
+  font-weight: 600;
+}
+
+.formLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--side-nav-head-color);
+}
+
+.saveCodeContent,
+.editCodeContent {
+  padding: 10px 12px;
+}
+
+.cancelButton {
+  font-size: 11px;
+  cursor: pointer;
+  padding: 8px 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background: var(--form-bg-color);
+  border: solid 1px var(--border-main-color);
+}
+
+.saveButton {
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 20px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background: var(--theme-sub-green);
+  border: solid 1px var(--theme-main-green);
+}
+
 /* DisplayModal */
 .displayModal,
 .editModal,
 .saveModal,
 .logModal,
 .favModal,
-.themeModal,
+.settingsModal,
 .helpModal {
   top: 10%;
   opacity: 0;
@@ -30,7 +86,7 @@
 .saveModal.open,
 .logModal.open,
 .favModal.open,
-.themeModal.open,
+.settingsModal.open,
 .helpModal.open {
   opacity: 1;
   pointer-events: visible;
@@ -62,10 +118,16 @@
 }
 
 .modalCodeBox {
+  display: flex;
   margin: 30px 0;
+  padding: 20px 0;
   border-radius: 5px;
-  padding-bottom: 10px;
+  justify-content: center;
   background: rgb(40, 58, 40);
+}
+
+.modalCodeBox > pre {
+  width: calc(100% - 20px * 2);
 }
 
 .modalCodeDesc {
@@ -137,4 +199,178 @@
   justify-content: right;
 }
 
-/* SaveModal */
+/* SettingsModal */
+.settingsModalContainer {
+  transform: translateY(-10px);
+}
+
+.settingsModalTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.settingsModalCardWrap {
+  display: grid;
+  grid-gap: 10px;
+  margin-top: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.settingsModalCard {
+  width: 100px;
+}
+
+.settingsThemeImgBox {
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 3px;
+  box-sizing: border-box;
+  border: solid 1px var(--border-main-color);
+}
+
+.settingsModalCancelButton {
+  right: 15%;
+  bottom: 15%;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 8px 20px;
+  position: absolute;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background: var(--form-bg-color);
+  border: solid 1px var(--border-main-color);
+}
+
+.settingsThemeButton {
+  width: 100%;
+  height: 36px;
+  display: flex;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+  border-radius: 3px;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: center;
+  color: rgb(220, 220, 220);
+  border: solid 1px var(--border-main-color);
+}
+
+.settingsThemeButton.atom {
+  color: rgb(30, 30, 30);
+  background: var(--theme-main-green);
+  text-shadow: 0 0 1px rgb(30, 30, 30, 0.2);
+}
+
+.settingsThemeButton.github {
+  background: var(--theme-sub-green);
+}
+
+.settingsThemeButton.monokai {
+  background: var(--theme-accent-green);
+}
+
+/* HelpModal */
+.helpModalWrap {
+  width: 80%;
+  overflow: auto;
+  height: calc(80% - 50px * 2);
+}
+
+.helpModalWrap p,
+.helpModalWrap span {
+  font-size: 12px;
+}
+
+.helpSection,
+.helpFooter {
+  margin-top: 25px;
+}
+
+.helpDescription {
+  margin-top: 10px;
+}
+
+.helpTitle,
+.helpSectionTitle {
+  color: var(--theme-main-green);
+}
+
+.helpLink {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 10px;
+  text-decoration: underline;
+  color: var(--theme-link-green);
+}
+
+.helpCancelButton {
+  right: 10%;
+  bottom: 10%;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 8px 20px;
+  position: absolute;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background: var(--form-bg-color);
+  border: solid 1px var(--border-main-color);
+}
+
+/* FavModal */
+.modalWrap.fav {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: 1fr auto;
+}
+
+.favModalTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.favModalListWrap {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.favModalList {
+  display: grid;
+  grid-gap: 10px;
+  transform: translateY(6px);
+  grid-template-columns: 1fr 1fr;
+}
+
+/* LogModal */
+.logModalTitle {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.logModalWrap {
+  display: grid;
+  grid-gap: 30px;
+  margin-top: 30px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.logModalBox {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: 1fr auto;
+}
+
+.logModalHead {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.logLangListBox,
+.logTagListBox {
+  overflow: auto;
+}

@@ -21,6 +21,7 @@
   --theme-main-green: rgb(53, 199, 60);
   --theme-sub-green: rgb(51, 97, 39);
   --theme-accent-green: rgb(27, 107, 54);
+  --theme-link-green: rgb(45, 146, 79);
   --border-main-color: rgb(120, 120, 120, 0.32);
   --border-hover-color: rgb(120, 120, 120, 0.6);
   --border-sub-color: rgb(53, 199, 60, 0.2);
@@ -38,6 +39,7 @@
   --code-bg-color: rgb(42, 52, 42);
   --code-info-bg-color: rgb(30, 32, 30);
   --tag-bg-color: rgb(120, 250, 120, 0.1);
+  --toast-text-color: rgb(220, 220, 220);
 }
 
 html,
@@ -88,7 +90,7 @@ button {
 input,
 textarea {
   width: 100%;
-  margin-top: 10px;
+  margin-top: 4px;
   border-radius: 3px;
   background: var(--form-bg-color);
   border: solid 1px var(--border-main-color);
@@ -149,53 +151,6 @@ button:focus {
 body {
   overflow: hidden;
   background: var(--main-bg-color);
-}
-
-.ModalBg {
-  inset: 0;
-  opacity: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  pointer-events: none;
-  transition: all 0.4s ease;
-  backdrop-filter: blur(10px);
-  z-index: var(--modal-layer);
-  background: var(--modal-hide-bg-color);
-}
-
-.ModalBg.open {
-  opacity: 1;
-  pointer-events: visible;
-}
-
-.saveModalButton > p {
-  font-weight: 600;
-}
-
-.formLabel {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--side-nav-head-color);
-}
-
-.cancelButton {
-  font-size: 11px;
-  padding: 8px 20px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  background: var(--form-bg-color);
-  border: solid 1px var(--border-main-color);
-}
-
-.saveButton {
-  font-size: 11px;
-  font-weight: 600;
-  padding: 8px 20px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  background: var(--theme-sub-green);
-  border: solid 1px var(--theme-main-green);
 }
 
 .titleBar {
@@ -693,6 +648,7 @@ body {
   cursor: pointer;
   overflow: hidden;
   border-radius: 5px;
+  box-sizing: border-box;
   transition: all 0.4s ease;
   grid-template-rows: 0.55fr 0.45fr;
   border: solid 2px var(--border-main-color);
@@ -723,10 +679,10 @@ body {
 }
 
 .codeWrap {
-  width: 96%;
-  margin-top: 10px;
+  margin-top: 15px;
   overflow: hidden;
   position: relative;
+  width: calc(100% - 15px * 2);
 }
 
 .codeInfoArea {
@@ -801,6 +757,7 @@ pre .hljs {
 }
 
 pre code.hljs {
+  padding: 0;
   color: rgb(198, 231, 206);
 }
 

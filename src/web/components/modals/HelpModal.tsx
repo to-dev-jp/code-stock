@@ -11,9 +11,7 @@ export default function HelpModal({
         <div className="helpModalWrap">
           <div className="helpHeader">
             <h2 className="helpTitle">Code Stock</h2>
-            <p className="helpVersion">
-              version <>1.0.0</>
-            </p>
+            <p className="helpVersion">◆ version 1.0.0 ◆</p>
           </div>
 
           <p className="helpDescription">
@@ -75,7 +73,7 @@ export default function HelpModal({
               <li className="helpListItem">
                 <span className="helpListLabel">Settings</span>
                 <span className="helpListText">
-                  シンタックスハイライトのテーマを変更できます。設定は次回起動時も保持されます。
+                  シンタックスハイライトのテーマを変更できます。
                 </span>
               </li>
             </ul>
@@ -93,7 +91,7 @@ export default function HelpModal({
             <p className="helpFooterText">開発: 岡本 匠 (Takumi Okamoto)</p>
             <a
               className="helpLink"
-              href=""
+              href="https://github.com/to-dev-jp/code-stock"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -102,13 +100,12 @@ export default function HelpModal({
           </footer>
 
           <button
-            className="helpCloseButton"
+            className="helpCancelButton"
             onClick={() => {
-              /* モーダルを閉じる処理 */
               setIsModalOpen(false);
             }}
           >
-            CLOSE
+            キャンセル
           </button>
         </div>
       </div>

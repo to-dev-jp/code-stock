@@ -2,10 +2,11 @@ import hljs from "highlight.js/lib/core";
 import { useEffect, useRef } from "react";
 import edit from "../../../assets/edit-green.png";
 import trash from "../../../assets/delete-green.png";
-import { blankData, LANG_COLORS } from "../../const/const";
+import { LANG_COLORS } from "../../const/const";
 import { useModalsContext } from "../../context/provider/ModalsProvider";
 import { useEditContext } from "../../context/provider/EditProvider";
 import { useCodeMutations } from "../../hooks/mutations";
+import { DisplayData } from "../../types/types";
 
 export default function DisplayModal() {
   const { setEditData, setEditTags } = useEditContext();
@@ -71,7 +72,9 @@ export default function DisplayModal() {
         <div className="displayButtonsWrap">
           <button
             onClick={() => {
-              setDisplayData(blankData);
+              setDisplayData((prev: DisplayData) => {
+                return { ...prev, isOpen: false };
+              });
             }}
             className="cancelButton"
           >

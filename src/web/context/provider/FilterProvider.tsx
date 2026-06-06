@@ -18,7 +18,7 @@ export const FilterProvider = ({ children }: { children: React.ReactNode }) => {
 export const useFilterContext = () => {
   const ctx = useContext(FilterContext);
   if (!ctx) {
-    throw new Error("useFilterContext must be used within RefreshProvider");
+    throw new Error("useFilterContext must be used within FilterProvider");
   }
   return ctx;
 };

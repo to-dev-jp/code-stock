@@ -8,7 +8,7 @@ import { getTagColor } from "../hooks/utils";
 import { LANG_COLORS } from "../const/const";
 import { FilterOption, Lang, Tag } from "../types/types";
 import { useFilterContext } from "../context/provider/FilterProvider";
-import { useAllCodesLength, useCodes } from "../hooks/useCodes";
+import { useAllCodesLength } from "../hooks/useCodes";
 import { useModalsContext } from "../context/provider/ModalsProvider";
 import { useLangs, useTags } from "../hooks/useLangsAndTags";
 
@@ -18,7 +18,6 @@ export default function SideBar() {
 
   const { filterOption, setFilterOption } = useFilterContext();
   const { setCurrentModal } = useModalsContext();
-  const { data: codes } = useCodes(filterOption);
   const { data: codeLength } = useAllCodesLength();
 
   return (

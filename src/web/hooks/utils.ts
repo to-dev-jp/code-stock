@@ -20,7 +20,7 @@ export const validationCheck = (
   if (!codeData.lang.trim()) newErrors.lang = "使用言語を入力してください";
   if (!codeData.code.trim()) newErrors.code = "コード本文を入力してください";
   if (Object.values(newErrors).length > 0) {
-    setErrors(newErrors);
+    setErrors({ ...newErrors, shownAt: Date.now() });
     return false;
   }
   return true;

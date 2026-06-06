@@ -11,21 +11,22 @@ export default function Toast({
   const validationError =
     errors.title || errors.lang || errors.tags || errors.code;
   useEffect(() => {
+    if (!errors.shownAt) return;
     const timer = setTimeout(() => {
       setErrors({});
     }, 2000);
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [errors.title, errors.lang, errors.tags, errors.code]);
+    return () => clearTimeout(timer);
+  }, [errors.title, errors.lang, errors.tags, errors.code, errors.shownAt]);
 
   return (
     <div className={validationError ? "toast show" : "toast"}>
-      {errors.title && <p>{errors.title}</p>}
-      {errors.lang && <p>{errors.lang}</p>}
-      {errors.tags && <p>{errors.tags}</p>}
-      {errors.code && <p>{errors.code}</p>}
+      <div>
+        {errors.title && <p>{errors.title}</p>}
+        {errors.lang && <p>{errors.lang}</p>}
+        {errors.tags && <p>{errors.tags}</p>}
+        {errors.code && <p>{errors.code}</p>}
+      </div>
     </div>
   );
 }

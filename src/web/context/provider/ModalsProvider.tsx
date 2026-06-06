@@ -18,7 +18,7 @@ export const ModalsProvider = ({ children }: { children: React.ReactNode }) => {
 export const useModalsContext = () => {
   const ctx = useContext(ModalsContext);
   if (!ctx) {
-    throw new Error("useModalsContext must be used within RefreshProvider");
+    throw new Error("useModalsContext must be used within ModalsProvider");
   }
   return ctx;
 };

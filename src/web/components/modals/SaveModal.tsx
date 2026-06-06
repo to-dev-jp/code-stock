@@ -110,6 +110,7 @@ export default function SaveModal() {
                 <p className="formLabel">コード本文</p>
                 <textarea
                   name="code"
+                  className="saveCodeContent"
                   placeholder="コードを入力する"
                   value={codeData.code}
                   onChange={(e) => {
@@ -142,9 +143,6 @@ export default function SaveModal() {
             >
               <button
                 type="button"
-                style={{
-                  cursor: "pointer",
-                }}
                 className="cancelButton"
                 onClick={() => {
                   setCurrentModal((prev: Modal) => ({
@@ -155,13 +153,7 @@ export default function SaveModal() {
               >
                 キャンセル
               </button>
-              <button
-                type="submit"
-                className="saveButton"
-                style={{
-                  cursor: "pointer",
-                }}
-              >
+              <button type="submit" className="saveButton">
                 保存する
               </button>
             </div>
