@@ -1,4 +1,7 @@
 import logo from "../../../assets/code-stock.png";
+import atom from "../../../assets/atom-theme.png";
+import github from "../../../assets/github-theme.png";
+import monokai from "../../../assets/monokai-theme.png";
 import { applyTheme } from "../../theme/theme";
 
 export default function SettingsModal({
@@ -17,9 +20,10 @@ export default function SettingsModal({
             <div className="settingsModalCard">
               <div className="settingsThemeImgBox">
                 <img
-                  src={logo}
-                  width="100"
-                  height="160"
+                  className="settingsThemeImg"
+                  src={atom}
+                  width="530"
+                  height="340"
                   alt="ATOMテーマカラーイメージ画像"
                 />
               </div>
@@ -35,9 +39,10 @@ export default function SettingsModal({
             <div className="settingsModalCard">
               <div className="settingsThemeImgBox">
                 <img
-                  src={logo}
-                  width="100"
-                  height="160"
+                  className="settingsThemeImg"
+                  src={github}
+                  width="530"
+                  height="340"
                   alt="GITHUBテーマカラーイメージ画像"
                 />
               </div>
@@ -53,9 +58,10 @@ export default function SettingsModal({
             <div className="settingsModalCard">
               <div className="settingsThemeImgBox">
                 <img
-                  src={logo}
-                  width="100"
-                  height="160"
+                  className="settingsThemeImg"
+                  src={monokai}
+                  width="530"
+                  height="340"
                   alt="MONOKAIテーマカラーイメージ画像"
                 />
               </div>

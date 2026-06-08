@@ -682,7 +682,7 @@ body {
   margin-top: 15px;
   overflow: hidden;
   position: relative;
-  width: calc(100% - 15px * 2);
+  width: calc(100% - 10px * 2);
 }
 
 .codeInfoArea {
@@ -760,7 +760,7 @@ pre .hljs {
 }
 
 pre code.hljs {
-  padding: 0;
+  padding: 0 !important;
   color: rgb(198, 231, 206);
 }
 
