@@ -2,9 +2,19 @@
 import hljs from "highlight.js/lib/core";
 import "highlight.js/styles/atom-one-dark-reasonable.css";
 import go from "highlight.js/lib/languages/go";
-// import html from "highlight.js/lib/languages/html";
 import typescript from "highlight.js/lib/languages/typescript";
 import javascript from "highlight.js/lib/languages/javascript";
+import xml from "highlight.js/lib/languages/xml";
+import css from "highlight.js/lib/languages/css";
+import python from "highlight.js/lib/languages/python";
+import dart from "highlight.js/lib/languages/dart";
+import php from "highlight.js/lib/languages/php";
+import ruby from "highlight.js/lib/languages/ruby";
+import kotlin from "highlight.js/lib/languages/kotlin";
+import java from "highlight.js/lib/languages/java";
+import sql from "highlight.js/lib/languages/sql";
+import bash from "highlight.js/lib/languages/bash";
+import rust from "highlight.js/lib/languages/rust";
 
 import "./App.css";
 import "./styles/modal.css";
@@ -27,9 +37,19 @@ import ModalBg from "./components/modals/ModalBg";
 
 // highlight.jsの言語登録
 hljs.registerLanguage("go", go);
-// hljs.registerLanguage("html", html);
 hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("typescript", typescript);
+hljs.registerLanguage("html", xml);
+hljs.registerLanguage("css", css);
+hljs.registerLanguage("python", python);
+hljs.registerLanguage("dart", dart);
+hljs.registerLanguage("php", php);
+hljs.registerLanguage("ruby", ruby);
+hljs.registerLanguage("kotlin", kotlin);
+hljs.registerLanguage("java", java);
+hljs.registerLanguage("sql", sql);
+hljs.registerLanguage("bash", bash);
+hljs.registerLanguage("rust", rust);
 
 const queryClient = new QueryClient({
   defaultOptions: {
