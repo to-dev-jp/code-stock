@@ -740,6 +740,9 @@ body {
   font-size: 10px;
   padding: 2px 6px;
   border-radius: 3px;
+  overflow: hidden; /* はみ出た部分を非表示 */
+  white-space: nowrap; /* 折り返し無しにする */
+  text-overflow: ellipsis; /* 語尾を3点リーダーに */
   background: var(--tag-bg-color);
   border: solid 1px var(--border-main-color);
 }
